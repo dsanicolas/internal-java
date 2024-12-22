@@ -6,10 +6,9 @@ import model.DbId;
  * Domain Model Class for Player.
  * Represents a player with a nickname, score, and database ID.
  */
-public class Player {
+public class Player extends DbId {
     private String nickName; // The nickname of the player
     private int score; // The score of the player
-    private int id; // The database ID
 
     /**
      * Constructor for Player.
@@ -19,7 +18,7 @@ public class Player {
      * @param _id The database ID of the player.
      */
     public Player(String _nickName, int _id) {
-        this.id = _id;
+        super(_id);
         this.nickName = _nickName;
     } 
 
@@ -60,37 +59,14 @@ public class Player {
     }
 
     /**
-     * Sets the database ID.
-     *
-     * @param _id The new database ID.
-     */
-    public void setId(int _id) {
-        this.id = _id;
-    }
-
-    /**
-     * Gets the database ID.
-     *
-     * @return The current database ID.
-     */
-    public int getId() {
-        return this.id;
-    }
-
-    /**
      * Returns a string representation of the player for debugging purposes.
+     * Overrides the dbgMeAsStr method in DbId.
      *
      * @return A string representing the player's nickname, score, and ID.
      */
+    @Override
     public String dbgMeAsStr() {
-       return "Player: nickName " + this.nickName + " score " +  this.score + "id " + this.id;
+       return "Player: nickName " + this.nickName + " score " +  this.score + super.dbgMeAsStr(); // Call parent function 
     } 
-
-    /**
-     * Prints a string representation of the object for debugging purposes.
-     */
-    public void dbgMe() {
-        System.out.println(this.dbgMeAsStr());
-    }
 }
 

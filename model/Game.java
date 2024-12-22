@@ -1,18 +1,20 @@
 package model;
 
+import model.DbId;
+
 /**
  * Domain Model Class for Game.
  * Represents a game with a name and a database ID.
  */
-public class Game {
+public class Game extends DbId {
     private String name; // The name of the game
-    private int id; // The database ID
 
     /**
      * Default constructor for Game.
      * This constructor is private to prevent direct instantiation without parameters.
      */
     private Game() {
+        super(); // Call parent constructor
     } 
 
     /**
@@ -23,7 +25,7 @@ public class Game {
      * @param _id The database ID of the game.
      */
     public Game(String _name, int _id) {
-        this.id = _id;
+        super(_id); // Call parent constructor
         this.name = _name;
     } 
 
@@ -46,37 +48,13 @@ public class Game {
     }
 
     /**
-     * Sets the database ID.
+     * Returns a string representation of the game for debugging purposes.
+     * Overrides the dbgMeAsStr method in DbId.
      *
-     * @param _id The new database ID.
+     * @return A string representing the game's name and ID.
      */
-    public void setId(int _id) {
-        this.id = _id;
-    }
-
-    /**
-     * Gets the database ID.
-     *
-     * @return The current database ID.
-     */
-    public int getId() {
-        return this.id;
-    }
-
-    /**
-     * Returns a string representation of the object for debugging purposes.
-     *
-     * @return A string representing the object's ID.
-     */
+    @Override
     public String dbgMeAsStr() {
-        return "Game: name " + this.name + " id " + this.id;
-    }
-
-    /**
-     * Prints a string representation of the object for debugging purposes.
-     */
-    public void dbgMe() {
-        System.out.println(this.dbgMeAsStr());
-    }
-
+        return "Game: name " + this.name + super.dbgMeAsStr(); // Call parent function
+    } 
 }

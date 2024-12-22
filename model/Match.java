@@ -10,14 +10,13 @@ import model.Game;
  * Domain Model Class for Match.
  * Represents a match with players, game, scores, and a database ID.
  */
-public class Match {
+public class Match extends DbId {
     private LocalDateTime date; // The date and time of the match
     private Player player1; // The first player
     private Player player2; // The second player
     private Game game; // The game being played
     private int scorePlayer1; // The score of the first player
     private int scorePlayer2; // The score of the second player
-    private int id; // The database ID
 
     /**
      * Constructor for Match.
@@ -29,7 +28,7 @@ public class Match {
      * @param _id The database ID of the match.
      */
     public Match(Player _player1, Player _player2, Game _game, int _id) {
-        this.id = _id;
+        super(_id);
         this.player1 = _player1;
         this.player2 = _player2;
         this.game = _game;
@@ -99,41 +98,19 @@ public class Match {
     }
 
     /**
-     * Sets the database ID.
-     *
-     * @param _id The new database ID.
-     */
-    public void setId(int _id) {
-        this.id = _id;
-    }
-
-    /**
-     * Gets the database ID.
-     *
-     * @return The current database ID.
-     */
-    public int getId() {
-        return this.id;
-    }
-
-    /**
      * Returns a string representation of the match for debugging purposes.
+     * Overrides the dbgMeAsStr method in DbId.
      *
      * @return A string representing the match details and IDs.
      */
+    @Override
     public String dbgMeAsStr() {
-        return "Match: " +
-            (this.player1 == null ? "null" : this.player1.dbgMeAsStr()) + " " +
-            (this.player2 == null ? "null" : this.player2.dbgMeAsStr()) + " " +
-            (this.game == null ? "null" : this.game.dbgMeAsStr()) + " " +
+        return
+            (this.player1 == null ? "null" : this.player1.dbgMeAsStr()) +
+            (this.player2 == null ? "null" : this.player2.dbgMeAsStr()) +
+            (this.game == null ? "null" : this.game.dbgMeAsStr()) +
             " scorePlayer1 " + this.scorePlayer1 +
-            " scorePlayer2 " + this.scorePlayer2 + "id " + this.id;
+            " scorePlayer2 " + this.scorePlayer2 + 
+            super.dbgMeAsStr(); // Call parent function
     } 
-
-    /**
-     * Prints a string representation of the object for debugging purposes.
-     */
-    public void dbgMe() {
-        System.out.println(this.dbgMeAsStr());
-    }
 }
