@@ -31,6 +31,8 @@ STATE 6: Implement (Criteria C)
 
 		.3 test mode
 	
+		.4 unit test
+	
 	v2.0.x Views Implementation
 		
 		.0 HomeView implementation
