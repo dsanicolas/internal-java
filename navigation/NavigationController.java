@@ -22,17 +22,17 @@ public class NavigationController {
     private PlayerEditView playerEditView;
     private PlayerCreateView playerCreateView;
     private ResultView resultView;
-    private AppState appState; // Application state object
+    private AppState appState;
 
     /**
      * Constructs the NavigationController with the given database mockup.
      *
-     * @param _db the database mockup used for data operations
-     * @param _appState the state of the app
+     * @param db the database mockup used for data operations
+     * @param appState the state of the app
      */
-    public NavigationController(DbMockup _db, AppState _appState) {
-        this.db = _db;
-        this.appState = _appState;
+    public NavigationController(DbMockup db, AppState appState) {
+        this.db = db;
+        this.appState = appState;
         this.homeView = new HomeView(this.db, this.appState, this);
     }
 

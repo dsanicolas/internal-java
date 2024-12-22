@@ -15,22 +15,19 @@ import model.Game;
 import utils.AppState;
 import navigation.NavigationController;
 
+import view.BaseView;
+
 /**
  * HomeView implements the view of the Home interface, allowing users to select a game
  * and view the top players.
  */
-public class HomeView {
-
-    // Title of the home window
-    private String title = "HOME"; // Title of the home window
-    private JFrame mainFrame; // Main frame of the home view
+public class HomeView extends BaseView {
 
     // Dependencies and data models
     private DbMockup db; // Database mockup used for fetching data
     private List<Game> games; // List of available games
     private Player[] topPlayers; // Array of top players
     private AppState appState; // Application state
-    private NavigationController navigationController; // Navigation controller for managing view transitions
 
     /**
      * Constructs the HomeView.
@@ -40,9 +37,9 @@ public class HomeView {
      * @param _navigationController the navigation controller for managing view transitions
      */
     public HomeView(DbMockup _db, AppState _appState, NavigationController _navigationController) {
+        super("HOME", _navigationController);
         this.db = _db;
         this.appState = _appState;
-        this.navigationController = _navigationController;
     }
 
     /**
@@ -65,30 +62,13 @@ public class HomeView {
      * Renders the HomeView interface, including game selection buttons and
      * a table displaying the top players.
      */
+    @Override
     public void render() {
         this.fillGames();
         this.fillTopPlayers();
 
-        // We don't want to recreate a frame each time for this view, so destroy any previous one that may have been created
-        this.destroyMainFrame();
-
-        // Create the frame
-        this.mainFrame = new JFrame(this.title);
-
-        // When clicking the close button, we want to destroy that frame, here it is
-        this.mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        this.mainFrame.addWindowListener(new WindowAdapter() { 
-            @Override
-            public void windowClosing(WindowEvent e) {
-                destroyMainFrame();
-            }
-        });
-
-        // Set frame size
-        this.mainFrame.setSize(500, 300);
-
-        // Center the frame on the screen
-        this.mainFrame.setLocationRelativeTo(null); 
+        // Set up the main frame
+        this.setupMainFrame();
 
         // Now create a horizontal grid inside that frame with a left panel and a right one
         JPanel grid = new JPanel(new GridLayout(1, 2));
@@ -152,12 +132,5 @@ public class HomeView {
 
         // Make the frame visible
         this.mainFrame.setVisible(true);
-    }
-  
-    private void destroyMainFrame() {
-        if (this.mainFrame != null) {
-            this.mainFrame.setVisible(false);
-            this.mainFrame.dispose();
-        }
     }
 }

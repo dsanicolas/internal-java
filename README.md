@@ -45,7 +45,7 @@ STATE 6: Implement (Criteria C)
 
 		.1 navigation model
 
-		.2 base view implementation for inheritance off all view classes
+		.2 base view abstraction
  
 STATE 7: Integration
 

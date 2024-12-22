@@ -6,26 +6,23 @@ import java.awt.event.*;
 import java.util.List;
 
 import db.DbMockup;
-import model.Game;
 import model.Player;
-
 import utils.AppState;
 import navigation.NavigationController;
+
+import view.BaseView;
 
 /**
  * PlayerSelectionView implements the view for selecting players.
  * Provides the interface for selecting two players and starting the game.
  */
-public class PlayerSelectionView {
+public class PlayerSelectionView extends BaseView {
 
-    private String title = "Player Selection"; // Title of the frame
-    private JFrame mainFrame; // Main frame for the view
     private DbMockup db; // Database mockup for player operations
     private Player player1; // Player 1 object
     private Player player2; // Player 2 object
     private Player[] players; // Array of players fetched from the database
     private AppState appState; // Application state object
-    private NavigationController navigationController; // Controller for managing view transitions
 
     /**
      * Constructor for PlayerSelectionView.
@@ -36,9 +33,9 @@ public class PlayerSelectionView {
      * @param navigationController The navigation controller for managing view transitions.
      */
     public PlayerSelectionView(DbMockup _db, AppState _appState, NavigationController navigationController) {
+        super("Player Selection", navigationController);
         this.db = _db;
         this.appState = _appState;
-        this.navigationController = navigationController;
     }
 
     public void setPlayer1(Player _plyr) {
@@ -62,23 +59,12 @@ public class PlayerSelectionView {
      * Render the player selection view.
      * Creates and displays the GUI for selecting players.
      */
+    @Override
     public void render() {
         this.fillPlayers();
 
-        // Destroy any previous frame
-        this.destroyMainFrame();
-
-        // Create the frame
-        this.mainFrame = new JFrame(this.title);
-        this.mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        this.mainFrame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                destroyMainFrame();
-            }
-        });
-        this.mainFrame.setSize(500, 300);
-        this.mainFrame.setLocationRelativeTo(null);
+        // Set up the main frame
+        this.setupMainFrame();
 
         // Create a vertical grid inside the frame with a top panel and a bottom one
         JPanel grid = new JPanel(new GridLayout(2, 1));
@@ -116,13 +102,6 @@ public class PlayerSelectionView {
 
         // Make the frame visible
         this.mainFrame.setVisible(true);
-    }
-
-    private void destroyMainFrame() {
-        if (this.mainFrame != null) {
-            this.mainFrame.setVisible(false);
-            this.mainFrame.dispose();
-        }
     }
 
     /**
@@ -212,7 +191,7 @@ public class PlayerSelectionView {
         pnl.add(plyrPnl);
     }
 
-    private void setComboBoxToPlayer(JComboBox cmbo, Player plyr) {
+    private void setComboBoxToPlayer(JComboBox<Player> cmbo, Player plyr) {
         if (plyr == null) {
             cmbo.setSelectedIndex(0);
         } else {

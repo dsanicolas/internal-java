@@ -8,18 +8,17 @@ import db.DbMockup;
 import model.Player;
 import navigation.NavigationController;
 
+import view.BaseView;
+
 /**
  * PlayerEditView implements the view for editing a player's details.
  * Provides the interface for renaming a player and saving the changes.
  */
-public class PlayerEditView {
+public class PlayerEditView extends BaseView {
 
-    private String title = "Edit Player"; // Title of the frame
-    private JFrame mainFrame; // Main frame for the view
     private DbMockup db; // Database mockup for player operations
     private Player plyr; // Player object to be edited
     private boolean isForPlayer1; // Flag to indicate if the player is Player 1
-    private NavigationController navigationController; // Controller for managing view transitions
 
     /**
      * Constructor for PlayerEditView.
@@ -27,34 +26,24 @@ public class PlayerEditView {
      *
      * @param _db The database mockup object.
      * @param _plyr The player object to be edited.
+     * @param _isForPlayer1 True if editing player 1, false if editing player 2.
      * @param navigationController The navigation controller for managing view transitions.
      */
     public PlayerEditView(DbMockup _db, Player _plyr, boolean _isForPlayer1, NavigationController navigationController) {
+        super("Edit Player", navigationController);
         this.db = _db;
         this.plyr = _plyr;
         this.isForPlayer1 = _isForPlayer1;
-        this.navigationController = navigationController;
     }
 
     /**
      * Render the player editing view.
      * Creates and displays the GUI for editing a player's nickname.
      */
+    @Override
     public void render() {
-        // Destroy any previous frame
-        this.destroyMainFrame();
-
-        // Create the frame
-        this.mainFrame = new JFrame(this.title);
-        this.mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        this.mainFrame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                destroyMainFrame();
-            }
-        });
-        this.mainFrame.setSize(500, 300);
-        this.mainFrame.setLocationRelativeTo(null);
+        // Set up the main frame
+        this.setupMainFrame();
 
         // Create a vertical grid inside the frame with a top panel and a bottom one
         JPanel grid = new JPanel(new GridLayout(2, 1));
@@ -118,12 +107,5 @@ public class PlayerEditView {
         // Make the frame visible
         this.mainFrame.pack();
         this.mainFrame.setVisible(true);
-    }
-
-    private void destroyMainFrame() {
-        if (this.mainFrame != null) {
-            this.mainFrame.setVisible(false);
-            this.mainFrame.dispose();
-        }
     }
 }

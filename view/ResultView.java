@@ -8,14 +8,13 @@ import model.Player;
 import model.Game;
 import navigation.NavigationController;
 
+import view.BaseView;
+
 /**
  * ResultView implements the view of the match result.
  * Displays the final scores of the players and the winner.
  **/
-public class ResultView {
-
-    private String title = "Result"; // Title of the frame
-    private JFrame mainFrame; // Main frame for the view
+public class ResultView extends BaseView {
 
     private Player player1; // Player 1 object
     private Player player2; // Player 2 object
@@ -23,7 +22,6 @@ public class ResultView {
     private Player winner; // Winner of the match
     private int matchScorePlayer1; // Final score of player 1
     private int matchScorePlayer2; // Final score of player 2
-    private NavigationController navigationController; // Controller for managing view transitions
 
     /**
      * Constructor for ResultView.
@@ -43,39 +41,28 @@ public class ResultView {
      * @param navigationController The navigation controller for managing view transitions.
      */
     public ResultView(Player _player1, Player _player2, Game _game, int _matchScorePlayer1, int _matchScorePlayer2, Player _winner, NavigationController navigationController) {
+        super("Result", navigationController);
         this.player1 = _player1;
         this.player2 = _player2;
         this.game = _game;
         this.winner = _winner;
         this.matchScorePlayer1 = _matchScorePlayer1;
-        this.matchScorePlayer2 = _matchScorePlayer2;    
-        this.navigationController = navigationController;
+        this.matchScorePlayer2 = _matchScorePlayer2;
     }
 
     /**
      * Render the result view.
      * Creates and displays the GUI for showing the match results.
      */
-    public void render() { 
-        // Destroy any previous frame
-        this.destroyMainFrame();
-
-        // Create the frame
-        this.mainFrame = new JFrame(this.title);
-        this.mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        this.mainFrame.addWindowListener(new WindowAdapter() { 
-            @Override
-            public void windowClosing(WindowEvent e) {
-                destroyMainFrame();
-            }
-        });
-        this.mainFrame.setSize(500, 300);
-        this.mainFrame.setLocationRelativeTo(null);
+    @Override
+    public void render() {
+        // Set up the main frame
+        this.setupMainFrame();
 
         // Create a vertical grid inside the frame with a top panel and a bottom one
         JPanel grid = new JPanel(new GridLayout(2, 1));
-        this.mainFrame.add(grid);    
-    
+        this.mainFrame.add(grid);
+
         // Top panel for displaying the match result
         JPanel tpPnl = new JPanel();
         tpPnl.setLayout(new BoxLayout(tpPnl, BoxLayout.Y_AXIS));
@@ -85,7 +72,7 @@ public class ResultView {
 
         // Bottom panel for displaying players' scores
         JPanel bttmPnl = new JPanel();
-        bttmPnl.setLayout(new BoxLayout(bttmPnl, BoxLayout.Y_AXIS));   
+        bttmPnl.setLayout(new BoxLayout(bttmPnl, BoxLayout.Y_AXIS));
         this.renderPlayerScore(bttmPnl, this.player1);
         this.renderPlayerScore(bttmPnl, this.player2);
         grid.add(bttmPnl);
@@ -105,13 +92,6 @@ public class ResultView {
         this.mainFrame.setVisible(true);
     }
 
-    private void destroyMainFrame() {
-        if (this.mainFrame != null) {
-            this.mainFrame.setVisible(false);
-            this.mainFrame.dispose();
-        }
-    }
-
     /**
      * Render a piece of text inside a given panel.
      *
@@ -123,7 +103,7 @@ public class ResultView {
         JLabel inrTxt = new JLabel(_someText);
         inrTxt.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Add the inrTxt to the panel    
+        // Add the inrTxt to the panel
         _pnl.add(inrTxt);
     }
 

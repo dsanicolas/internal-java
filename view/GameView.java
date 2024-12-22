@@ -14,16 +14,14 @@ import model.Game;
 import utils.AppState;
 import navigation.NavigationController;
 
+import view.BaseView;
+
 /**
  * GameView is responsible for rendering the game interface, managing player interactions,
  * and handling game logic, such as scoring and player turns.
  */
-public class GameView {
+public class GameView extends BaseView {
 
-    // Title of the game window
-    private String title = "GAME"; // Title of the game window
-    private JFrame mainFrame; // Main frame of the game view
-    
     // Dependencies and models
     private DbMockup db; // Database mockup used for persistence
     private Player player1; // The first player
@@ -31,7 +29,6 @@ public class GameView {
     private Player winner; // The winner of the game
     private Game game; // The game being played
     private AppState appState; // Application state
-    private NavigationController navigationController; // Navigation controller for managing view transitions
     private boolean isPlayer1Turn = true; // Flag to track if it's player 1's turn
 
     /**
@@ -47,12 +44,12 @@ public class GameView {
      * Preconditions: _player1, _player2, and _game must not be null.
      */
     public GameView(DbMockup _db, Player _player1, Player _player2, Game _game, AppState _appState, NavigationController _navigationController) {
+        super("GAME", _navigationController);
         this.player1 = _player1;
         this.player2 = _player2;
         this.game = _game;
         this.db = _db;
         this.appState = _appState;
-        this.navigationController = _navigationController;
     }
    
     /**
@@ -95,28 +92,11 @@ public class GameView {
      * Renders the game interface, including the game board, turn prompt,
      * and control buttons.
      */
+    @Override
     public void render() {
 
-        // We don't want to recreate a frame each time for this view, so destroy any previous one that may have been created
-        this.destroyMainFrame();
-
-        // Create the frame
-        this.mainFrame = new JFrame(this.title);
-
-        // When clicking the close button, we want to destroy that frame, here it is
-        this.mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        this.mainFrame.addWindowListener(new WindowAdapter() { 
-            @Override
-            public void windowClosing(WindowEvent e) {
-                destroyMainFrame();
-            }
-        });
-
-        // Set frame size
-        this.mainFrame.setSize(500, 300);
-
-        // Center the frame on the screen
-        this.mainFrame.setLocationRelativeTo(null); 
+        // Set up the main frame
+        this.setupMainFrame();
 
         // Now create a horizontal grid inside that frame with 3 panels: board, turn, leave 
         JPanel grid = new JPanel(new GridLayout(3, 1));
@@ -174,12 +154,5 @@ public class GameView {
 
         // Make the frame visible
         this.mainFrame.setVisible(true);
-    }
-
-    private void destroyMainFrame() {
-        if (this.mainFrame != null) {
-            this.mainFrame.setVisible(false);
-            this.mainFrame.dispose();
-        }
     }
 }
