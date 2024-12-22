@@ -28,35 +28,6 @@ import model.ModelTest;
  * Running Tests:
  * java -classpath ./ TwoPlayersGame --test
  **/
-import view.HomeView;
-
-import db.DbMockup;
-import db.DbMockupTest;
-
-import model.Player;
-import model.Game;
-import model.Match;
-import model.ModelTest;
-
-// First Install Java (jre, jdk)
-// Ubuntu:
-//      sudo apt install default-jre
-//      sudo apt install default-jdk
-// https://www.java.com/en/download/
-// check version java -version
-
-/**
- * Main class for the TwoPlayersGame application.
- * 
- * Compilation:
- * javac -classpath ./ TwoPlayersGame.java
- * 
- * Running:
- * java -classpath ./ TwoPlayersGame
- * 
- * Running Tests:
- * java -classpath ./ TwoPlayersGame --test
- **/
 public class TwoPlayersGame {
     
     /**
@@ -92,16 +63,19 @@ public class TwoPlayersGame {
 
         ModelTest.main(null);
         DbMockupTest.main(null);
-
     }
 
     /**
      * Runs the application in normal mode.
      * Initializes the database mockup and renders various views for the application.
      */
-     static void runApplication() {
-        HomeView.main(null);
+    static void runApplication() {
+        DbMockup db = new DbMockup();
+
+        HomeView hmVw = new HomeView(db);
+        hmVw.render();
+
     }
-   
+
 }
 
