@@ -31,6 +31,7 @@ public class TwoPlayersGame {
      * @param args Command line arguments.
      */
     public static void main(String[] args) {
+
         DbMockup db = new DbMockup();
 
         List<Player> plyrs = db.getPlayers("prefix");
@@ -47,6 +48,12 @@ public class TwoPlayersGame {
             Game gm = gmsItr.next();
             gm.dbgMe(); 
         }
+       
+        Player aPlyr = new Player("Player1", 1);
+        aPlyr.dbgMe();
+
+        Game aGm = new Game("Tic Tac Toe", 1);
+        aGm.dbgMe();
         
         Match aMtch = new Match(new Player("Nicolas",1),new Player("John",2),new Game("Tic Tac Toe",1), 1);
         aMtch.dbgMe();
