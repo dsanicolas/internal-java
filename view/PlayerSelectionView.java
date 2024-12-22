@@ -10,6 +10,7 @@ import model.Game;
 import model.Player;
 
 import utils.AppState;
+import navigation.NavigationController;
 
 /**
  * PlayerSelectionView implements the view for selecting players.
@@ -24,17 +25,20 @@ public class PlayerSelectionView {
     private Player player2; // Player 2 object
     private Player[] players; // Array of players fetched from the database
     private AppState appState; // Application state object
+    private NavigationController navigationController; // Controller for managing view transitions
 
     /**
      * Constructor for PlayerSelectionView.
-     * Initializes the database mockup 
+     * Initializes the database mockup and the navigation controller.
      *
      * @param _db The database mockup object.
      * @param _appState The application state object.
+     * @param navigationController The navigation controller for managing view transitions.
      */
-    public PlayerSelectionView(DbMockup _db, AppState _appState) {
+    public PlayerSelectionView(DbMockup _db, AppState _appState, NavigationController navigationController) {
         this.db = _db;
         this.appState = _appState;
+        this.navigationController = navigationController;
     }
 
     public void setPlayer1(Player _plyr) {
@@ -103,7 +107,7 @@ public class PlayerSelectionView {
                 System.out.println("PlayerSelectionView - Start with player 1 " + player1.dbgMeAsStr() + " and player2 " + player2.dbgMeAsStr());
                 appState.setPlayer1(player1);
                 appState.setPlayer2(player2);
-                // TODO: Handle navigation to game view
+                navigationController.navigateToGameView();
                 destroyMainFrame();
             }
         });
@@ -190,7 +194,7 @@ public class PlayerSelectionView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("PlayerSelectionView - New Player requested for " + (isPlayer1 ? "player1" : "player2"));
-                // TODO: Handle navigation to player create view
+                navigationController.navigateToPlayerCreateView(isPlayer1);
             }
         });
         // Add listener to rename player button
@@ -198,7 +202,7 @@ public class PlayerSelectionView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("PlayerSelectionView - Edit Player requested for " + (isPlayer1 ? "player1" : "player2"));
-                // TODO: Handle navigation to player edit view
+                navigationController.navigateToPlayerEditView(isPlayer1 ? player1 : player2, isPlayer1);
             }
         });
         plyrPnl.add(newPlyrBtn);

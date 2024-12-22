@@ -13,6 +13,7 @@ import model.Player;
 import model.Game;
 
 import utils.AppState;
+import navigation.NavigationController;
 
 /**
  * HomeView implements the view of the Home interface, allowing users to select a game
@@ -29,16 +30,19 @@ public class HomeView {
     private List<Game> games; // List of available games
     private Player[] topPlayers; // Array of top players
     private AppState appState; // Application state
+    private NavigationController navigationController; // Navigation controller for managing view transitions
 
     /**
      * Constructs the HomeView.
      *
      * @param _db the database mockup used for fetching data
      * @param _appState the application state
+     * @param _navigationController the navigation controller for managing view transitions
      */
-    public HomeView(DbMockup _db, AppState _appState) {
+    public HomeView(DbMockup _db, AppState _appState, NavigationController _navigationController) {
         this.db = _db;
         this.appState = _appState;
+        this.navigationController = _navigationController;
     }
 
     /**
@@ -111,7 +115,7 @@ public class HomeView {
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("HomeView - Selected Game:" + game.dbgMeAsStr());
                         appState.setGame(game);
-                        // TODO: Handle navigation to player selection view
+                        navigationController.navigateToPlayerSelectionView();
                     }
                 });
             leftPanel.add(button);

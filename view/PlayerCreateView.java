@@ -6,6 +6,7 @@ import java.awt.event.*;
 
 import db.DbMockup;
 import model.Player;
+import navigation.NavigationController;
 
 /**
  * PlayerCreateView provides an interface for creating a new player.
@@ -19,6 +20,7 @@ public class PlayerCreateView {
     private DbMockup db; // Database mockup for player creation
     private Player plyr; // Player object to be created
     private boolean isForPlayer1; // Flag to indicate if the player is Player 1
+    private NavigationController navigationController; // Controller for managing view transitions
 
     /**
      * Constructs the PlayerCreateView.
@@ -26,8 +28,9 @@ public class PlayerCreateView {
      * @param _db the database mockup used for player creation
      * @param navigationController the navigation controller for managing view transitions
      */
-    public PlayerCreateView(DbMockup _db, boolean _isForPlayer1) {
+    public PlayerCreateView(DbMockup _db, boolean _isForPlayer1, NavigationController navigationController) {
         this.db = _db;
+        this.navigationController = navigationController;
         this.isForPlayer1 = _isForPlayer1;
     }
 
@@ -90,7 +93,11 @@ public class PlayerCreateView {
                     nmInpt.setText("nickname already exist");
                     return;
                 }
-                // TODO: Handle navigation to player selection view with the created player
+                if (isForPlayer1) {
+                    navigationController.navigateToPlayerSelectionViewWithPlayer1(plyr);
+                } else {
+                    navigationController.navigateToPlayerSelectionViewWithPlayer2(plyr);
+                }
                 destroyMainFrame();
             }
         });
@@ -101,7 +108,7 @@ public class PlayerCreateView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("PlayerCreateView - Player Creation Cancelled");
-                // TODO: Handle navigation to player selection view
+                navigationController.navigateToPlayerSelectionView();
                 destroyMainFrame();
             }
         });

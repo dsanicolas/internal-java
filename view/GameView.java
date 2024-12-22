@@ -12,6 +12,7 @@ import model.Player;
 import model.Game;
 
 import utils.AppState;
+import navigation.NavigationController;
 
 /**
  * GameView is responsible for rendering the game interface, managing player interactions,
@@ -30,6 +31,7 @@ public class GameView {
     private Player winner; // The winner of the game
     private Game game; // The game being played
     private AppState appState; // Application state
+    private NavigationController navigationController; // Navigation controller for managing view transitions
     private boolean isPlayer1Turn = true; // Flag to track if it's player 1's turn
 
     /**
@@ -40,15 +42,17 @@ public class GameView {
      * @param _player2 the second player
      * @param _game the game being played
      * @param _appState the application state
+     * @param _navigationController the navigation controller for managing view transitions
      *
      * Preconditions: _player1, _player2, and _game must not be null.
      */
-    public GameView(DbMockup _db, Player _player1, Player _player2, Game _game, AppState _appState) {
+    public GameView(DbMockup _db, Player _player1, Player _player2, Game _game, AppState _appState, NavigationController _navigationController) {
         this.player1 = _player1;
         this.player2 = _player2;
         this.game = _game;
         this.db = _db;
         this.appState = _appState;
+        this.navigationController = _navigationController;
     }
    
     /**
@@ -72,7 +76,7 @@ public class GameView {
 
         Match match = this.db.informMatchResult(this.player1, this.player2, this.game, matchScorePlayer1, matchScorePlayer2);
 
-         // TODO: Handle navigation to result view
+        navigationController.navigateToResultView(matchScorePlayer1, matchScorePlayer2, null); // TODO: SCORE AND WINNER FOR EACH GAME
     }
 
     /**
@@ -161,7 +165,7 @@ public class GameView {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("GameView - Leave Button pressed by " + (isPlayer1Turn ? player1.dbgMeAsStr() : player2.dbgMeAsStr()));
                     onLeave();    // Perform leave operations
-                    // TODO: Handle navigation to home view
+                    navigationController.navigateToHomeView();
                     destroyMainFrame();
                 }
             });

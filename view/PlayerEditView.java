@@ -6,6 +6,8 @@ import java.awt.event.*;
 
 import db.DbMockup;
 import model.Player;
+import navigation.NavigationController;
+
 /**
  * PlayerEditView implements the view for editing a player's details.
  * Provides the interface for renaming a player and saving the changes.
@@ -17,6 +19,7 @@ public class PlayerEditView {
     private DbMockup db; // Database mockup for player operations
     private Player plyr; // Player object to be edited
     private boolean isForPlayer1; // Flag to indicate if the player is Player 1
+    private NavigationController navigationController; // Controller for managing view transitions
 
     /**
      * Constructor for PlayerEditView.
@@ -24,11 +27,13 @@ public class PlayerEditView {
      *
      * @param _db The database mockup object.
      * @param _plyr The player object to be edited.
+     * @param navigationController The navigation controller for managing view transitions.
      */
-    public PlayerEditView(DbMockup _db, Player _plyr, boolean _isForPlayer1) {
+    public PlayerEditView(DbMockup _db, Player _plyr, boolean _isForPlayer1, NavigationController navigationController) {
         this.db = _db;
         this.plyr = _plyr;
         this.isForPlayer1 = _isForPlayer1;
+        this.navigationController = navigationController;
     }
 
     /**
@@ -86,7 +91,11 @@ public class PlayerEditView {
                     nmInpt.setText("nickname already exist");
                     return;
                 }
-                // TODO: Handle navigation to player selection view with the edited player
+                if (isForPlayer1) {
+                    navigationController.navigateToPlayerSelectionViewWithPlayer1(plyr);
+                } else {
+                    navigationController.navigateToPlayerSelectionViewWithPlayer2(plyr);
+                }
                 destroyMainFrame();
             }
         });
@@ -97,7 +106,7 @@ public class PlayerEditView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("PlayerEditView - Player Creation Cancelled");
-                // TODO: Handle navigation to player selection view
+                navigationController.navigateToPlayerSelectionView();
                 destroyMainFrame();
             }
         });

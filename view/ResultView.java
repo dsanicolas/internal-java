@@ -6,6 +6,7 @@ import java.awt.event.*;
 
 import model.Player;
 import model.Game;
+import navigation.NavigationController;
 
 /**
  * ResultView implements the view of the match result.
@@ -22,6 +23,7 @@ public class ResultView {
     private Player winner; // Winner of the match
     private int matchScorePlayer1; // Final score of player 1
     private int matchScorePlayer2; // Final score of player 2
+    private NavigationController navigationController; // Controller for managing view transitions
 
     /**
      * Constructor for ResultView.
@@ -38,14 +40,16 @@ public class ResultView {
      * @param _matchScorePlayer1 The final score of player 1.
      * @param _matchScorePlayer2 The final score of player 2.
      * @param _winner The winner of the match (null if no winner).
+     * @param navigationController The navigation controller for managing view transitions.
      */
-    public ResultView(Player _player1, Player _player2, Game _game, int _matchScorePlayer1, int _matchScorePlayer2, Player _winner) {
+    public ResultView(Player _player1, Player _player2, Game _game, int _matchScorePlayer1, int _matchScorePlayer2, Player _winner, NavigationController navigationController) {
         this.player1 = _player1;
         this.player2 = _player2;
         this.game = _game;
         this.winner = _winner;
         this.matchScorePlayer1 = _matchScorePlayer1;
         this.matchScorePlayer2 = _matchScorePlayer2;    
+        this.navigationController = navigationController;
     }
 
     /**
@@ -91,7 +95,7 @@ public class ResultView {
         homeBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: Handle navigation to home view
+                navigationController.navigateToHomeView();
                 destroyMainFrame();
             }
         });
