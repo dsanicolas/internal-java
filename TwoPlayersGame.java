@@ -1,4 +1,9 @@
 import view.HomeView;
+import view.PlayerSelectionView;
+import view.PlayerCreateView;
+import view.PlayerEditView;
+import view.GameView;
+import view.ResultView;
 
 import db.DbMockup;
 import db.DbMockupTest;
@@ -7,6 +12,9 @@ import model.Player;
 import model.Game;
 import model.Match;
 import model.ModelTest;
+
+import utils.AppState; 
+import utils.AppStateTest;
 
 
 // First Install Java (jre, jdk)
@@ -63,6 +71,7 @@ public class TwoPlayersGame {
 
         ModelTest.main(null);
         DbMockupTest.main(null);
+        AppStateTest.main(null);
     }
 
     /**
@@ -71,10 +80,28 @@ public class TwoPlayersGame {
      */
     static void runApplication() {
         DbMockup db = new DbMockup();
+        AppState state = new AppState();
 
-        HomeView hmVw = new HomeView(db);
+        HomeView hmVw = new HomeView(db,state);
         hmVw.render();
 
+        PlayerSelectionView psVw = new PlayerSelectionView(db,state);
+        psVw.render();
+
+        GameView gmVw = new GameView(db, new Player("Nicolas", 1), new Player("John", 2), new Game("Tic Tac Toe", 1), state);
+        gmVw.render();
+
+        ResultView resWinVw = new ResultView(new Player("Nicolas", 1), new Player("John", 2), new Game("Tic Tac Toe", 1), 5, 3, new Player("Nicolas", 1));
+        resWinVw.render();
+
+        ResultView resNulVw = new ResultView(new Player("Nicolas", 1), new Player("John", 2), new Game("Tic Tac Toe", 1), 5, 5, null);
+        resNulVw.render();
+
+        PlayerCreateView pcVw = new PlayerCreateView(db, true);
+        pcVw.render();
+
+        PlayerEditView peVw = new PlayerEditView(db, new Player("Nicolas", 1), true);
+        peVw.render();
     }
 
 }

@@ -45,19 +45,21 @@ public class ResultView {
         this.game = _game;
         this.winner = _winner;
         this.matchScorePlayer1 = _matchScorePlayer1;
-        this.matchScorePlayer2 = _matchScorePlayer2;
+        this.matchScorePlayer2 = _matchScorePlayer2;    
     }
 
     /**
      * Render the result view.
      * Creates and displays the GUI for showing the match results.
      */
-    public void render() {
+    public void render() { 
+        // Destroy any previous frame
         this.destroyMainFrame();
 
+        // Create the frame
         this.mainFrame = new JFrame(this.title);
         this.mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        this.mainFrame.addWindowListener(new WindowAdapter() {
+        this.mainFrame.addWindowListener(new WindowAdapter() { 
             @Override
             public void windowClosing(WindowEvent e) {
                 destroyMainFrame();
@@ -66,21 +68,25 @@ public class ResultView {
         this.mainFrame.setSize(500, 300);
         this.mainFrame.setLocationRelativeTo(null);
 
+        // Create a vertical grid inside the frame with a top panel and a bottom one
         JPanel grid = new JPanel(new GridLayout(2, 1));
-        this.mainFrame.add(grid);
-
+        this.mainFrame.add(grid);    
+    
+        // Top panel for displaying the match result
         JPanel tpPnl = new JPanel();
         tpPnl.setLayout(new BoxLayout(tpPnl, BoxLayout.Y_AXIS));
         this.renderSomeText(tpPnl, this.winner == null ? "NULL MATCH :-( " : (this.winner.getNickName() + " WON !!"));
         this.renderSomeText(tpPnl, this.player1.getNickName() + " " + this.matchScorePlayer1 + "-" + this.matchScorePlayer2 + " " + this.player2.getNickName());
         grid.add(tpPnl);
 
+        // Bottom panel for displaying players' scores
         JPanel bttmPnl = new JPanel();
-        bttmPnl.setLayout(new BoxLayout(bttmPnl, BoxLayout.Y_AXIS));
+        bttmPnl.setLayout(new BoxLayout(bttmPnl, BoxLayout.Y_AXIS));   
         this.renderPlayerScore(bttmPnl, this.player1);
         this.renderPlayerScore(bttmPnl, this.player2);
         grid.add(bttmPnl);
 
+        // Add a button to navigate back to the HomeView
         JButton homeBtn = new JButton("Home");
         homeBtn.addActionListener(new ActionListener() {
             @Override
@@ -91,6 +97,7 @@ public class ResultView {
         });
         bttmPnl.add(homeBtn);
 
+        // Make the frame visible
         this.mainFrame.setVisible(true);
     }
 
@@ -101,12 +108,27 @@ public class ResultView {
         }
     }
 
+    /**
+     * Render a piece of text inside a given panel.
+     *
+     * @param _pnl The panel to add the text to.
+     * @param _someText The text to display.
+     */
     private void renderSomeText(JPanel _pnl, String _someText) {
+        // Create the label and add it to the panel
         JLabel inrTxt = new JLabel(_someText);
         inrTxt.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Add the inrTxt to the panel    
         _pnl.add(inrTxt);
     }
 
+    /**
+     * Render a player's score inside a given panel.
+     *
+     * @param _pnl The panel to add the score to.
+     * @param player The player whose score is to be displayed.
+     */
     private void renderPlayerScore(JPanel _pnl, Player player) {
         this.renderSomeText(_pnl, player.getNickName() + " - " + player.getScore());
     }

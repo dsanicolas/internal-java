@@ -24,7 +24,7 @@ public class PlayerCreateView {
      * Constructs the PlayerCreateView.
      *
      * @param _db the database mockup used for player creation
-     * @param _isForPlayer1 flag to indicate if the player is Player 1
+     * @param navigationController the navigation controller for managing view transitions
      */
     public PlayerCreateView(DbMockup _db, boolean _isForPlayer1) {
         this.db = _db;
@@ -37,8 +37,10 @@ public class PlayerCreateView {
      * for submitting or canceling the operation.
      */
     public void render() {
+        // Destroy any previous frame
         this.destroyMainFrame();
 
+        // Create the frame
         this.mainFrame = new JFrame(this.title);
         this.mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         this.mainFrame.addWindowListener(new WindowAdapter() {
@@ -50,25 +52,30 @@ public class PlayerCreateView {
         this.mainFrame.setSize(500, 300);
         this.mainFrame.setLocationRelativeTo(null);
 
+        // Create a vertical grid inside the frame with a top panel and a bottom one
         JPanel grid = new JPanel(new GridLayout(2, 1));
         this.mainFrame.add(grid);
 
+        // Top panel for nickname input
         JPanel tpPnl = new JPanel();
         tpPnl.setLayout(new BoxLayout(tpPnl, BoxLayout.Y_AXIS));
         grid.add(tpPnl);
 
+        // Prompt for entering a new nickname
         JLabel prmptText = new JLabel("Enter a new nickname");
         prmptText.setAlignmentX(Component.CENTER_ALIGNMENT);
-        JTextField nmInpt = new JTextField(25);
+        JTextField nmInpt = new JTextField(25); // TextField with a capacity of 25 characters
         nmInpt.setMaximumSize(nmInpt.getPreferredSize());
         tpPnl.add(prmptText);
-        tpPnl.add(Box.createRigidArea(new Dimension(0, 10)));
+        tpPnl.add(Box.createRigidArea(new Dimension(0, 10))); // Add some space between components
         tpPnl.add(nmInpt);
 
+        // Bottom panel for buttons
         JPanel bttmPnl = new JPanel();
         bttmPnl.setLayout(new BoxLayout(bttmPnl, BoxLayout.X_AXIS));
         grid.add(bttmPnl);
 
+        // Submit button for creating a player
         JButton sbmtBttn = new JButton("Submit");
         sbmtBttn.addActionListener(new ActionListener() {
             @Override
@@ -88,6 +95,7 @@ public class PlayerCreateView {
             }
         });
 
+        // Cancel button to abort player creation
         JButton cnclBttn = new JButton("Cancel");
         cnclBttn.addActionListener(new ActionListener() {
             @Override
@@ -98,12 +106,14 @@ public class PlayerCreateView {
             }
         });
 
-        bttmPnl.add(Box.createHorizontalGlue());
+        // Add buttons to the bottom panel
+        bttmPnl.add(Box.createHorizontalGlue()); // Add space between buttons
         bttmPnl.add(sbmtBttn);
-        bttmPnl.add(Box.createRigidArea(new Dimension(10, 0)));
+        bttmPnl.add(Box.createRigidArea(new Dimension(10, 0))); // Add space between buttons
         bttmPnl.add(cnclBttn);
-        bttmPnl.add(Box.createHorizontalGlue());
+        bttmPnl.add(Box.createHorizontalGlue()); // Add space between buttons
 
+        // Make the frame visible
         this.mainFrame.pack();
         this.mainFrame.setVisible(true);
     }

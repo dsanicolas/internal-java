@@ -6,7 +6,6 @@ import java.awt.event.*;
 
 import db.DbMockup;
 import model.Player;
-
 /**
  * PlayerEditView implements the view for editing a player's details.
  * Provides the interface for renaming a player and saving the changes.
@@ -25,7 +24,6 @@ public class PlayerEditView {
      *
      * @param _db The database mockup object.
      * @param _plyr The player object to be edited.
-     * @param _isForPlayer1 Flag to indicate if the player is Player 1.
      */
     public PlayerEditView(DbMockup _db, Player _plyr, boolean _isForPlayer1) {
         this.db = _db;
@@ -38,8 +36,10 @@ public class PlayerEditView {
      * Creates and displays the GUI for editing a player's nickname.
      */
     public void render() {
+        // Destroy any previous frame
         this.destroyMainFrame();
 
+        // Create the frame
         this.mainFrame = new JFrame(this.title);
         this.mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         this.mainFrame.addWindowListener(new WindowAdapter() {
@@ -51,22 +51,27 @@ public class PlayerEditView {
         this.mainFrame.setSize(500, 300);
         this.mainFrame.setLocationRelativeTo(null);
 
+        // Create a vertical grid inside the frame with a top panel and a bottom one
         JPanel grid = new JPanel(new GridLayout(2, 1));
         this.mainFrame.add(grid);
 
+        // Top panel for nickname input
         JPanel tpPnl = new JPanel();
         tpPnl.setLayout(new BoxLayout(tpPnl, BoxLayout.Y_AXIS));
         grid.add(tpPnl);
 
+        // Prompt for new name
         JLabel prmptText = new JLabel("Enter a new nickname");
-        JTextField nmInpt = new JTextField(25);
+        JTextField nmInpt = new JTextField(25); // TextField with a capacity of 25 characters
         tpPnl.add(prmptText);
         tpPnl.add(nmInpt);
 
+        // Bottom panel for buttons
         JPanel bttmPnl = new JPanel();
         bttmPnl.setLayout(new BoxLayout(bttmPnl, BoxLayout.X_AXIS));
         grid.add(bttmPnl);
 
+        // Submit button for saving changes
         JButton sbmtBttn = new JButton("Submit");
         sbmtBttn.addActionListener(new ActionListener() {
             @Override
@@ -86,6 +91,7 @@ public class PlayerEditView {
             }
         });
 
+        // Cancel button to abort editing
         JButton cnclBttn = new JButton("Cancel");
         cnclBttn.addActionListener(new ActionListener() {
             @Override
@@ -96,9 +102,11 @@ public class PlayerEditView {
             }
         });
 
+        // Add buttons to the bottom panel
         bttmPnl.add(sbmtBttn);
         bttmPnl.add(cnclBttn);
 
+        // Make the frame visible
         this.mainFrame.pack();
         this.mainFrame.setVisible(true);
     }

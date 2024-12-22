@@ -12,6 +12,8 @@ import db.DbMockup;
 import model.Player;
 import model.Game;
 
+import utils.AppState;
+
 /**
  * HomeView implements the view of the Home interface, allowing users to select a game
  * and view the top players.
@@ -26,14 +28,17 @@ public class HomeView {
     private DbMockup db; // Database mockup used for fetching data
     private List<Game> games; // List of available games
     private Player[] topPlayers; // Array of top players
+    private AppState appState; // Application state
 
     /**
      * Constructs the HomeView.
      *
      * @param _db the database mockup used for fetching data
+     * @param _appState the application state
      */
-    public HomeView(DbMockup _db) {
+    public HomeView(DbMockup _db, AppState _appState) {
         this.db = _db;
+        this.appState = _appState;
     }
 
     /**
@@ -105,6 +110,7 @@ public class HomeView {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("HomeView - Selected Game:" + game.dbgMeAsStr());
+                        appState.setGame(game);
                         // TODO: Handle navigation to player selection view
                     }
                 });
