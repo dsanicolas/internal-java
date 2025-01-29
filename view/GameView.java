@@ -16,6 +16,10 @@ import navigation.NavigationController;
 
 import view.BaseView;
 
+import service.AbstractGame;
+import service.GameEndListener;
+import service.TicTacToe;
+
 /**
  * GameView is responsible for rendering the game interface, managing player interactions,
  * and handling game logic, such as scoring and player turns.
@@ -73,7 +77,7 @@ public class GameView extends BaseView {
 
         Match match = this.db.informMatchResult(this.player1, this.player2, this.game, matchScorePlayer1, matchScorePlayer2);
 
-        navigationController.navigateToResultView(matchScorePlayer1, matchScorePlayer2, null); // TODO: SCORE AND WINNER FOR EACH GAME
+        navigationController.navigateToResultView(matchScorePlayer1, matchScorePlayer2, this.winner); // TODO: SCORE AND WINNER FOR EACH GAME
     }
 
     /**
@@ -103,38 +107,23 @@ public class GameView extends BaseView {
         this.mainFrame.add(grid);
 
         // Board panel
-        JPanel boardPanel = new JPanel();
-        JLabel gameBoard = new JLabel("<html><table><tr><td>2</td><td>2</td><td>2</td></tr><tr><td>2</td><td>2</td><td>2</td></tr><td>2</td><td>2</td><td>2</td></tr></table></html>");
-        boardPanel.add(gameBoard);
+        JPanel boardPanel = new JPanel(); //this will be the game board
         grid.add(boardPanel);
 
-        // Turn panel
-        JPanel turnPanel = new JPanel();
-        JLabel promptForPlay = new JLabel(player1.getNickName() + " - please enter your next move");
-        turnPanel.add(promptForPlay);
-        JButton playButton = new JButton("play");
-        playButton.addActionListener(
-            new ActionListener() {
-                
-                // TODO: end game integration, for now we simulate it
-                int count = 0;                
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    System.out.println("GameView - Play Button pressed by " + (isPlayer1Turn ? player1.dbgMeAsStr() : player2.dbgMeAsStr()));
-                    isPlayer1Turn = !isPlayer1Turn;
-                    promptForPlay.setText((isPlayer1Turn ? player1.getNickName() : player2.getNickName()) + " - please enter your next move");
-                    
-                    // TODO: end game integration, for now we simulate it                   
-                    this.count++;
-                    if (this.count > 5) {
-                        onEndGame();    
-                        destroyMainFrame();            
-                    }
+        // Status panel
+        JLabel statusPanel = new JLabel("", JLabel.CENTER); //this will be the status line
+        grid.add(statusPanel);
+        
+        // Start Game
+        AbstractGame gameService = new TicTacToe(player1, player2,boardPanel, statusPanel, 
+            new GameEndListener(){                        
+                public void onGameEnd(Player wnr){
+                    winner = wnr;
+                    onEndGame();
+                    destroyMainFrame();
                 }
-            });
-        turnPanel.add(playButton);
-        grid.add(turnPanel);
+         });  
+        gameService.startGame();         
 
         // Leave panel
         JPanel leavePanel = new JPanel();

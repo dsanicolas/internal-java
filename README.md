@@ -46,6 +46,13 @@ STATE 6: Implement (Criteria C)
 		.1 navigation model
 
 		.2 base view abstraction
+	
+	v4.0.x Game Logic Integration
+
+		.0 Tic Tac Toe
+
+		.1 Checkers
+
  
 STATE 7: Integration
 
