@@ -79,6 +79,11 @@ public abstract class AbstractGame {
      */
     abstract boolean isNullMatch();
 
+    /**
+    * return the scores of player 1 and player 2 in the game
+    **/
+    abstract public int[] getScore();
+
 
     /**
      * Starts the game by calling the onStartGame method.

@@ -35,6 +35,7 @@ public class GameView extends BaseView {
     private Game game; // The game being played
     private AppState appState; // Application state
     private boolean isPlayer1Turn = true; // Flag to track if it's player 1's turn
+    private AbstractGame gameService = null; //the implementation of the game
 
     /**
      * Constructs the GameView.
@@ -72,13 +73,11 @@ public class GameView extends BaseView {
             }
         }
     
-        // TODO: game score integration
-        int matchScorePlayer1 = (int)(Math.random() * 100);
-        int matchScorePlayer2 = (int)(Math.random() * 100);
+        int[] matchScore = this.gameService.getScore();
 
-        Match match = this.db.informMatchResult(this.player1, this.player2, this.game, matchScorePlayer1, matchScorePlayer2);
+        Match match = this.db.informMatchResult(this.player1, this.player2, this.game, matchScore[0], matchScore[1]);
 
-        navigationController.navigateToResultView(matchScorePlayer1, matchScorePlayer2, this.winner); // TODO: SCORE AND WINNER FOR EACH GAME
+        navigationController.navigateToResultView(matchScore[0], matchScore[1], this.winner); 
     }
 
     /**
@@ -116,8 +115,8 @@ public class GameView extends BaseView {
         grid.add(statusPanel);
         
         // Start Game
-        AbstractGame gameService = getGameService(this.game.getName(), boardPanel, statusPanel);
-        gameService.startGame();         
+        this.gameService = getGameService(this.game.getName(), boardPanel, statusPanel);
+        this.gameService.startGame();         
 
         // Leave panel
         JPanel leavePanel = new JPanel();

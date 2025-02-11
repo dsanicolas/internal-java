@@ -247,4 +247,11 @@ public class Checkers extends AbstractGame {
     private boolean isValidPosition(int row, int col) {
         return row >= 0 && row < BOARD_SIZE && col >= 0 && col < BOARD_SIZE;
     }
+
+     /**
+    * return score for player 1 and 2
+    **/
+    public int[] getScore(){
+        return new int[]{player1Captures, player2Captures};  
+    }
 }

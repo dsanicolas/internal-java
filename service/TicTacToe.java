@@ -147,6 +147,19 @@ public class TicTacToe extends AbstractGame {
         }
         return isC;
     }
+
+    /**
+    * return score for player 1 and 2
+    **/
+    public int[] getScore(){
+        if (isWinner('X')){
+            return new int[]{countPlay/2,0};
+        }  
+        if (isWinner('O')){
+            return new int[]{0,countPlay/2};
+        } 
+        return  new int[]{0,0};  
+    }
     
 }
 
