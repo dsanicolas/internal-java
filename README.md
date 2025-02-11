@@ -52,7 +52,11 @@ STATE 6: Implement (Criteria C)
 		.0 Tic Tac Toe
 
 		.1 Checkers
+	v5.0.x Scoring
+		
+		.0 Scoring
 
+	v6.0.x Database Connection
  
 STATE 7: Integration
 

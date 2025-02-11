@@ -45,20 +45,22 @@ public abstract class AbstractGame {
      * Abstract method to process a player's move and update the board.
      * Must be implemented in a subclass to handle how the board is updated.
      *
-     * @param play    the move made by the player
+     * @param play_from the move start made by the player
+     * @param play_to the move end made by the player
      * @param isPlayer1 indicates if it is Player 1's turn
      * @param panel   the game board panel
      */
-    abstract protected void moveAndPrintBoard(int play, boolean isPlayer1, JPanel panel);
+    abstract protected void moveAndPrintBoard(int play_from ,int play_to, boolean isPlayer1, JPanel panel);
 
     /**
      * Abstract method to validate a move.
      * Must be implemented in a subclass to define how moves are validated.
      *
-     * @param play the move to be validated
-     * @return true if the move is valid, false otherwise
+     *  @param play_from the move start made by the player
+     *  @param play_to the move end made by the player 
+     *  @return true if the move is valid, false otherwise
      */
-    abstract boolean isValidMove(int play);
+    abstract boolean isValidMove(int play_from ,int play_to);
 
     /**
      * Abstract method to check if a player has won.
@@ -77,6 +79,7 @@ public abstract class AbstractGame {
      */
     abstract boolean isNullMatch();
 
+
     /**
      * Starts the game by calling the onStartGame method.
      */
@@ -88,11 +91,12 @@ public abstract class AbstractGame {
      * Handles a player's move, updates the board, checks for a winner or draw,
      * and switches turns.
      *
-     * @param play the move made by the player
+     * @param play_from the move start made by the player
+     * @param play_to the move end made by the player  
      */
-    protected void handlePlayerMove(int play) {
-        if (isValidMove(play)) {
-            moveAndPrintBoard(play, isPlayer1, this.panel);
+    protected void handlePlayerMove(int play_from ,int play_to) {
+        if (isValidMove(play_from,play_to)) {
+            moveAndPrintBoard(play_from, play_to, isPlayer1, this.panel);
 
             // Check for winner
             if (isWinner(isPlayer1)) {

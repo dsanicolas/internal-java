@@ -57,9 +57,7 @@ public class NavigationController {
      * Displays the GameView for the given players and game.
      */
     public void showGameView() {
-        if (this.gameView == null) {
-            this.gameView = new GameView(this.db, appState.getPlayer1(), appState.getPlayer2(), appState.getGame(), this.appState, this);
-        }
+        this.gameView = new GameView(this.db, appState.getPlayer1(), appState.getPlayer2(), appState.getGame(), this.appState, this);
         this.gameView.render();
     }
 

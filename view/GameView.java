@@ -19,6 +19,7 @@ import view.BaseView;
 import service.AbstractGame;
 import service.GameEndListener;
 import service.TicTacToe;
+import service.Checkers;
 
 /**
  * GameView is responsible for rendering the game interface, managing player interactions,
@@ -115,14 +116,7 @@ public class GameView extends BaseView {
         grid.add(statusPanel);
         
         // Start Game
-        AbstractGame gameService = new TicTacToe(player1, player2,boardPanel, statusPanel, 
-            new GameEndListener(){                        
-                public void onGameEnd(Player wnr){
-                    winner = wnr;
-                    onEndGame();
-                    destroyMainFrame();
-                }
-         });  
+        AbstractGame gameService = getGameService(this.game.getName(), boardPanel, statusPanel);
         gameService.startGame();         
 
         // Leave panel
@@ -143,5 +137,29 @@ public class GameView extends BaseView {
 
         // Make the frame visible
         this.mainFrame.setVisible(true);
+    }
+
+    private AbstractGame getGameService(String gameName, JPanel boardPanel,JLabel statusPanel){
+        if(gameName.equals("Tic Tac Toe")){
+            return new TicTacToe(player1, player2,boardPanel, statusPanel, 
+                new GameEndListener(){                        
+                    public void onGameEnd(Player wnr){
+                        winner = wnr;
+                        onEndGame();
+                        destroyMainFrame();
+                    }
+             });  
+        }
+        if(gameName.equals("Checkers")){
+            return new Checkers(player1, player2,boardPanel, statusPanel, 
+                new GameEndListener(){                        
+                    public void onGameEnd(Player wnr){
+                        winner = wnr;
+                        onEndGame();
+                        destroyMainFrame();
+                    }
+             });  
+        }
+        return null;
     }
 }

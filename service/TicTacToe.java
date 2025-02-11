@@ -48,7 +48,7 @@ public class TicTacToe extends AbstractGame {
                 buttons[i][j].addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        handlePlayerMove(play);
+                        handlePlayerMove(0,play);
                     }
                 });
 
@@ -60,12 +60,13 @@ public class TicTacToe extends AbstractGame {
     /**
      * Updates the board with the current player's move and disables the button after the move.
      *
-     * @param play the move made by the player
+     *  @param play_from the move start made by the player, NOT USED FOR THAT GAME!
+     *  @param play_to the move end made by the player 
      * @param isPlayer1 true if it's Player 1's turn, false otherwise
      * @param panel the game board panel
      */
     @Override
-    protected void moveAndPrintBoard(int play, boolean isPlayer1, JPanel panel) {
+    protected void moveAndPrintBoard(int play_from, int play, boolean isPlayer1, JPanel panel) {
         int row = play / BOARD_SIZE;
         int col = play % BOARD_SIZE;
         mask[row][col] = isPlayer1 ? 'X' : 'O';
@@ -99,11 +100,12 @@ public class TicTacToe extends AbstractGame {
     /**
      * Checks if a move is valid.
      *
-     * @param play the move to be validated
+     *  @param play_from the move start made by the player, NOT USED FOR THAT GAME!
+     *  @param play the move end made by the player 
      * @return true if the move is valid, false otherwise
      */
     @Override
-    boolean isValidMove(int play) {
+    boolean isValidMove(int play_from, int play) {
         int row = play / BOARD_SIZE;
         int col = play % BOARD_SIZE;
         return mask[row][col] == '-';
@@ -145,5 +147,6 @@ public class TicTacToe extends AbstractGame {
         }
         return isC;
     }
+    
 }
 
