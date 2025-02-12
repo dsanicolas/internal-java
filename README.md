@@ -57,6 +57,10 @@ STATE 6: Implement (Criteria C)
 		.0 Scoring
 
 	v6.0.x Database Connection
+		
+		.0 schema, intial data, sql statement and interface
+	
+		.1 connection implementation
  
 STATE 7: Integration
 

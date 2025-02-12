@@ -27,11 +27,33 @@ public class Match extends DbId {
      * @param _game The game being played.
      * @param _id The database ID of the match.
      */
-    public Match(Player _player1, Player _player2, Game _game, int _id) {
+    public Match(Player _player1, Player _player2, Game _game, long _id) {
         super(_id);
         this.player1 = _player1;
         this.player2 = _player2;
         this.game = _game;
+    }
+
+    /**
+     * Constructor for Match.
+     * Initializes the match with two players, a game, and an ID.
+     *
+     * @param _player1 The first player.
+     * @param _player2 The second player.
+     * @param _game The game being played.
+     * @param _scorePlayer1 The new score of the first player.
+     * @param _scorePlayer2 The new score of the second player.
+     * @param _date the date
+     * @param _id The database ID of the match.
+     */
+    public Match(Player _player1, Player _player2,Game _game, int _scorePlayer1, int _scorePlayer2,LocalDateTime _date, long _id){
+        super(_id);
+        this.player1 = _player1;
+        this.player2 = _player2;
+        this.game = _game;
+        this.scorePlayer1 = _scorePlayer1;
+        this.scorePlayer2 = _scorePlayer2;
+        this.date = date;
     }
 
     /**

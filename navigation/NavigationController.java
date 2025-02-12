@@ -1,7 +1,7 @@
 package navigation;
 
 import view.*;
-import db.DbMockup;
+import db.DbInterface;
 import model.Game;
 import model.Player;
 import utils.AppState;
@@ -12,8 +12,8 @@ import utils.AppState;
  */
 public class NavigationController {
 
-    // Database mockup for data operations
-    private DbMockup db;
+    // Database for data operations
+    private DbInterface db;
 
     // Views managed by the controller
     private HomeView homeView;
@@ -30,7 +30,7 @@ public class NavigationController {
      * @param db the database mockup used for data operations
      * @param appState the state of the app
      */
-    public NavigationController(DbMockup db, AppState appState) {
+    public NavigationController(DbInterface db, AppState appState) {
         this.db = db;
         this.appState = appState;
         this.homeView = new HomeView(this.db, this.appState, this);

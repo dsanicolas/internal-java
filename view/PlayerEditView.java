@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-import db.DbMockup;
+import db.DbInterface;
 import model.Player;
 import navigation.NavigationController;
 
@@ -16,7 +16,7 @@ import view.BaseView;
  */
 public class PlayerEditView extends BaseView {
 
-    private DbMockup db; // Database mockup for player operations
+    private DbInterface db; // Database  for player operations
     private Player plyr; // Player object to be edited
     private boolean isForPlayer1; // Flag to indicate if the player is Player 1
 
@@ -24,12 +24,12 @@ public class PlayerEditView extends BaseView {
      * Constructor for PlayerEditView.
      * Initializes the database mockup and the player to be edited.
      *
-     * @param _db The database mockup object.
+     * @param _db The database  object.
      * @param _plyr The player object to be edited.
      * @param _isForPlayer1 True if editing player 1, false if editing player 2.
      * @param navigationController The navigation controller for managing view transitions.
      */
-    public PlayerEditView(DbMockup _db, Player _plyr, boolean _isForPlayer1, NavigationController navigationController) {
+    public PlayerEditView(DbInterface _db, Player _plyr, boolean _isForPlayer1, NavigationController navigationController) {
         super("Edit Player", navigationController);
         this.db = _db;
         this.plyr = _plyr;

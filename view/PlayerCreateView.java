@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-import db.DbMockup;
+import db.DbInterface;
 import model.Player;
 import navigation.NavigationController;
 
@@ -17,7 +17,7 @@ import view.BaseView;
  */
 public class PlayerCreateView extends BaseView {
 
-    private DbMockup db; // Database mockup for player creation
+    private DbInterface db; // Database mockup for player creation
     private Player plyr; // Player object to be created
     private boolean isForPlayer1; // Flag to indicate if the player is Player 1
 
@@ -27,7 +27,7 @@ public class PlayerCreateView extends BaseView {
      * @param _db the database mockup used for player creation
      * @param navigationController the navigation controller for managing view transitions
      */
-    public PlayerCreateView(DbMockup _db, boolean _isForPlayer1, NavigationController navigationController) {
+    public PlayerCreateView(DbInterface _db, boolean _isForPlayer1, NavigationController navigationController) {
         super("Create Player", navigationController);
         this.db = _db;
         this.isForPlayer1 = _isForPlayer1;

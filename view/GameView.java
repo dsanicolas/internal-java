@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.table.*;
 
-import db.DbMockup;
+import db.DbInterface;
 
 import model.Match;
 import model.Player;
@@ -28,7 +28,7 @@ import service.Checkers;
 public class GameView extends BaseView {
 
     // Dependencies and models
-    private DbMockup db; // Database mockup used for persistence
+    private DbInterface db; // Database  used for persistence
     private Player player1; // The first player
     private Player player2; // The second player
     private Player winner; // The winner of the game
@@ -40,7 +40,7 @@ public class GameView extends BaseView {
     /**
      * Constructs the GameView.
      *
-     * @param _db the database mockup used for persistence
+     * @param _db the database used for persistence
      * @param _player1 the first player
      * @param _player2 the second player
      * @param _game the game being played
@@ -49,7 +49,7 @@ public class GameView extends BaseView {
      *
      * Preconditions: _player1, _player2, and _game must not be null.
      */
-    public GameView(DbMockup _db, Player _player1, Player _player2, Game _game, AppState _appState, NavigationController _navigationController) {
+    public GameView(DbInterface _db, Player _player1, Player _player2, Game _game, AppState _appState, NavigationController _navigationController) {
         super("GAME", _navigationController);
         this.player1 = _player1;
         this.player2 = _player2;

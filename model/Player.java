@@ -17,10 +17,25 @@ public class Player extends DbId {
      * @param _nickName The nickname of the player.
      * @param _id The database ID of the player.
      */
-    public Player(String _nickName, int _id) {
+    public Player(String _nickName, long _id) {
         super(_id);
         this.nickName = _nickName;
     } 
+
+    /**
+     * Constructor for Player.
+     * Initializes the player with a specific nickname and ID.
+     *
+     * @param _nickName The nickname of the player.
+     * @param score The score of the player.
+     * @param _id The database ID of the player.
+     */
+    public Player(String _nickName, int score, long _id) {
+        super(_id);
+        this.nickName = _nickName;
+        this.score = score;
+    } 
+
 
     /**
      * Sets the nickname of the player.

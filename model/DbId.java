@@ -6,7 +6,7 @@ package model;
  */
 public class DbId {
     
-    private int id; // The database ID
+    private long id; // The database ID
 
     /**
      * Default constructor for DbId.
@@ -21,7 +21,7 @@ public class DbId {
      *
      * @param _id The database ID.
      */
-    protected DbId(int _id) {
+    protected DbId(long _id) {
         this.id = _id;
     }
 
@@ -30,7 +30,7 @@ public class DbId {
      *
      * @param _id The new database ID.
      */
-    public void setId(int _id) {
+    public void setId(long _id) {
         this.id = _id;
     }
 
@@ -39,7 +39,7 @@ public class DbId {
      *
      * @return The current database ID.
      */
-    public int getId() {
+    public long getId() {
         return this.id;
     }
 

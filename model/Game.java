@@ -24,7 +24,7 @@ public class Game extends DbId {
      * @param _name The name of the game.
      * @param _id The database ID of the game.
      */
-    public Game(String _name, int _id) {
+    public Game(String _name, long _id) {
         super(_id); // Call parent constructor
         this.name = _name;
     } 

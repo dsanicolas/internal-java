@@ -5,6 +5,9 @@ import view.PlayerEditView;
 import view.GameView;
 import view.ResultView;
 
+import db.DatabaseConnection;
+import db.DbRepository;
+import db.DbInterface;
 import db.DbMockup;
 import db.DbMockupTest;
 
@@ -16,8 +19,13 @@ import model.ModelTest;
 import utils.AppState; 
 import utils.AppStateTest;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import navigation.NavigationController; 
 import navigation.NavigationControllerTest;
+
+import javax.swing.JOptionPane;
 
 // First Install Java (jre, jdk)
 // Ubuntu:
@@ -30,13 +38,17 @@ import navigation.NavigationControllerTest;
  * Main class for the TwoPlayersGame application.
  * 
  * Compilation:
- * javac -classpath ./ TwoPlayersGame.java
+ * javac -classpath .:/usr/share/java/mysql-connector-java-9.2.0.jar TwoPlayersGame.java
+ * java -classpath .:/usr/share/java/mysql-connector-java-9.2.0.jar TwoPlayersGame
  * 
  * Running:
- * java -classpath ./ TwoPlayersGame
+ * java classpath .:/usr/share/java/mysql-connector-java-9.2.0.jar ./ TwoPlayersGame
  * 
  * Running Tests:
- * java -classpath ./ TwoPlayersGame --test
+ * java classpath .:/usr/share/java/mysql-connector-java-9.2.0.jar ./ TwoPlayersGame --test
+*
+ * Use DB Mockup:
+ * java -classpath ./ TwoPlayersGame --mockup
  **/
 public class TwoPlayersGame {
     
@@ -48,10 +60,15 @@ public class TwoPlayersGame {
      */
     public static void main(String[] args) {
         boolean isTestMode = false;
+        boolean useMockup = false;
 
         for (String arg : args) {
             if ("--test".equalsIgnoreCase(arg)) {
                 isTestMode = true;
+                break;
+            }
+            if ("--mockup".equalsIgnoreCase(arg)) {
+                useMockup= true;
                 break;
             }
         }
@@ -61,7 +78,7 @@ public class TwoPlayersGame {
             runTests();
         } else {
             System.out.println("TwoPlayersGame - Normal mode activated.");
-            runApplication();
+            runApplication(useMockup);
         }
     } 
 
@@ -82,8 +99,21 @@ public class TwoPlayersGame {
      * Runs the application in normal mode.
      * Initializes the database mockup and renders various views for the application.
      */
-    static void runApplication() {
-        DbMockup db = new DbMockup();
+    static void runApplication(boolean useMockup) {
+        DbInterface db = null;
+        if(!useMockup){
+            try {
+                Connection connection = DatabaseConnection.getConnection();
+                db = new DbRepository(connection);
+            }catch (Exception e) {
+                e.printStackTrace();
+                // Show a Java notification using Swing
+                JOptionPane.showMessageDialog(null, "Database error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } else {
+            db = new DbMockup();
+        }
         AppState state = new AppState();
         NavigationController nav = new NavigationController(db, state);
         nav.showHomeView();

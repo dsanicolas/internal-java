@@ -8,7 +8,7 @@ import javax.swing.table.*;
 import java.util.List;
 import java.util.Iterator;
 
-import db.DbMockup;
+import db.DbInterface;
 import model.Player;
 import model.Game;
 
@@ -24,7 +24,7 @@ import view.BaseView;
 public class HomeView extends BaseView {
 
     // Dependencies and data models
-    private DbMockup db; // Database mockup used for fetching data
+    private DbInterface db; // Database used for fetching data
     private List<Game> games; // List of available games
     private Player[] topPlayers; // Array of top players
     private AppState appState; // Application state
@@ -32,11 +32,11 @@ public class HomeView extends BaseView {
     /**
      * Constructs the HomeView.
      *
-     * @param _db the database mockup used for fetching data
+     * @param _db the database used for fetching data
      * @param _appState the application state
      * @param _navigationController the navigation controller for managing view transitions
      */
-    public HomeView(DbMockup _db, AppState _appState, NavigationController _navigationController) {
+    public HomeView(DbInterface _db, AppState _appState, NavigationController _navigationController) {
         super("HOME", _navigationController);
         this.db = _db;
         this.appState = _appState;

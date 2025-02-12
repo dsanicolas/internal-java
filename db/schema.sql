@@ -1,6 +1,12 @@
 -- sudo mysql
 CREATE SCHEMA TwoPlayersGame;
 
+-- create user and passwd to access that db
+CREATE USER 'root'@'localhost' IDENTIFIED BY 'Agora123';
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Agora123';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
 USE  TwoPlayersGame;
 
 CREATE TABLE `GAME`

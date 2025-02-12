@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 
-import db.DbMockup;
+import db.DbInterface;
 import model.Player;
 import utils.AppState;
 import navigation.NavigationController;
@@ -18,7 +18,7 @@ import view.BaseView;
  */
 public class PlayerSelectionView extends BaseView {
 
-    private DbMockup db; // Database mockup for player operations
+    private DbInterface db; // Database  for player operations
     private Player player1; // Player 1 object
     private Player player2; // Player 2 object
     private Player[] players; // Array of players fetched from the database
@@ -32,7 +32,7 @@ public class PlayerSelectionView extends BaseView {
      * @param _appState The application state object.
      * @param navigationController The navigation controller for managing view transitions.
      */
-    public PlayerSelectionView(DbMockup _db, AppState _appState, NavigationController navigationController) {
+    public PlayerSelectionView(DbInterface _db, AppState _appState, NavigationController navigationController) {
         super("Player Selection", navigationController);
         this.db = _db;
         this.appState = _appState;
