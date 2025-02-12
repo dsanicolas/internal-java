@@ -12,7 +12,7 @@ import model.Match;
  * DbMockup Db MockUp simulate Database Operations
  * 
 **/
-public class DbMockup{
+public class DbMockup implements DbInterface{
 
     private List<Player> players; // List of all players
     private List<Player> topPlayers; // List of top players
@@ -36,6 +36,7 @@ public class DbMockup{
      * @param prefix The prefix to filter players by name.
      * @return A list of players.
      */
+    @Override
     public List<Player> getPlayers(String prefix){
         System.out.println("DbMockup - getPlayers success"); 
         return this.players;
@@ -46,6 +47,7 @@ public class DbMockup{
      *
      * @return A list of top players.
      */
+    @Override
     public List<Player> getTopPlayers(){
         System.out.println("DbMockup - getTopPlayers success"); 
         return this.topPlayers;
@@ -56,6 +58,7 @@ public class DbMockup{
      *
      * @return A list of games.
      */
+    @Override
     public List<Game> getGames(){
         List<Game> list = new ArrayList<Game>();
         list.add(new Game("Tic Tac Toe", 1));
@@ -71,6 +74,7 @@ public class DbMockup{
      * @return The newly created player.
      * @throws Exception If the nickname is not valid or already exists.
      */
+    @Override
     public Player createPlayer(String _nickName) throws Exception{
         // Simulate random exception in case of nickname duplication
         if(Math.random() < 0.5){
@@ -89,6 +93,7 @@ public class DbMockup{
      * @return The renamed player.
      * @throws Exception If the nickname is not valid or already exists.
      */
+    @Override
     public Player renamePlayer(Player _plyr, String _nickName) throws Exception{
         // Simulate random exception in case of nickname duplication
         if(Math.random() < 0.5){
@@ -116,6 +121,7 @@ public class DbMockup{
      * @param _score The new score for the player.
      * @return The updated player.
      */
+    @Override
     public Player updatePlayerScore(Player _player, int _score){
         Player updated = new Player(_player.getNickName(), _player.getId());
         updated.setScore(_score);
@@ -133,6 +139,7 @@ public class DbMockup{
      * @param _matchScorePlayer2 The score of the second player.
      * @return The match with the results.
      */
+    @Override
     public Match informMatchResult(Player _player1, Player _player2, Game _game, int _matchScorePlayer1, int _matchScorePlayer2){
         // Simulate creation of a match in db
         Match match = new Match(_player1, _player2, _game, (int)(Math.random() * 100)); // Simulate creation of a new match with a random ID
